@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Billme Demo Creator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f4f5f7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: #528FF0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a1a2e;
+    }
+
+    .logo-text span {
+      color: #528FF0;
+    }
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #1a1a2e;
+      background: #f9fafb;
+      outline: none;
+      transition: border-color 0.15s;
+      margin-bottom: 18px;
+    }
+
+    input:focus {
+      border-color: #528FF0;
+      background: #fff;
+    }
+
+    input.error {
+      border-color: #ef4444;
+    }
+
+    .field-error {
+      font-size: 12px;
+      color: #ef4444;
+      margin-top: -14px;
+      margin-bottom: 14px;
+      display: none;
+    }
+
+    .receipt-preview {
+      background: #f0f4ff;
+      border: 1px solid #c7d8fb;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #374151;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .receipt-preview .label { font-weight: 600; color: #4b5563; margin-bottom: 0; font-size: 12px; }
+    .receipt-preview .value { font-family: monospace; color: #1d4ed8; font-size: 13px; font-weight: 600; }
+
+    button {
+      width: 100%;
+      padding: 13px;
+      background: #528FF0;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    button:hover { background: #3b7de8; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .result {
+      margin-top: 20px;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .result.success {
+      background: #ecfdf5;
+      border: 1px solid #6ee7b7;
+      color: #065f46;
+    }
+
+    .result.error {
+      background: #fef2f2;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+    }
+
+    .result-title {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .result-body {
+      font-family: monospace;
+      font-size: 12px;
+      word-break: break-all;
+      max-height: 120px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .bill-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #1d4ed8;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .bill-link:hover { text-decoration: underline; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 20px 0;
+    }
+
+    .note {
+      font-size: 11px;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon">🧾</div>
+    <div class="logo-text">Bill<span>me</span> Demo</div>
+  </div>
+
+  <h2>Create Demo Digital Bill</h2>
+  <p class="subtitle">Fill in the customer details to generate a live Billme demo.</p>
+
+  <label for="name">Customer Name</label>
+  <input type="text" id="name" placeholder="e.g. Pankaj Chaudhary" autocomplete="off" />
+  <div class="field-error" id="name-error">Please enter a customer name.</div>
+
+  <label for="mobile">Mobile Number</label>
+  <input type="tel" id="mobile" placeholder="e.g. 9999999999" maxlength="10" autocomplete="off" />
+  <div class="field-error" id="mobile-error">Please enter a valid 10-digit mobile number.</div>
+
+  <div class="receipt-preview">
+    <div>
+      <div class="label">Receipt Number (auto-generated)</div>
+      <div class="value" id="receipt-display">—</div>
+    </div>
+    <button type="button" onclick="refreshReceipt()" style="width:auto;padding:6px 12px;font-size:12px;background:#e0e7ff;color:#3730a3;border-radius:6px;">Refresh</button>
+  </div>
+
+  <button id="submit-btn" onclick="submitBill()">
+    <span id="btn-text">Create Bill</span>
+    <div class="spinner" id="spinner"></div>
+  </button>
+
+  <div class="result" id="result-box">
+    <div class="result-title" id="result-title"></div>
+    <div class="result-body" id="result-body"></div>
+    <a class="bill-link" id="bill-link" href="#" target="_blank" style="display:none">View Bill →</a>
+  </div>
+
+  <p class="note">For internal use only · Razorpay Billme Team</p>
+</div>
+
+<script>
+  const RECEIPT_PREFIX = "INV000d21b255";
+  const AUTH = "Basic cnpwX2xpdmVfT1l0SEJ5Y0ZSdjV5cDM6U3J5Q0dtRXE4OHBaMXZwUG5xNFVDN215";
+  const API_URL = "https://api.razorpay.com/v1/bills";
+
+  let currentReceipt = "";
+
+  function generateReceipt() {
+    const suffix = Math.floor(1000 + Math.random() * 9000);
+    return RECEIPT_PREFIX + suffix;
+  }
+
+  function refreshReceipt() {
+    currentReceipt = generateReceipt();
+    document.getElementById("receipt-display").textContent = currentReceipt;
+  }
+
+  // Generate on load
+  refreshReceipt();
+
+  function validate() {
+    const name = document.getElementById("name").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    let valid = true;
+
+    if (!name) {
+      document.getElementById("name").classList.add("error");
+      document.getElementById("name-error").style.display = "block";
+      valid = false;
+    } else {
+      document.getElementById("name").classList.remove("error");
+      document.getElementById("name-error").style.display = "none";
+    }
+
+    if (!/^\d{10}$/.test(mobile)) {
+      document.getElementById("mobile").classList.add("error");
+      document.getElementById("mobile-error").style.display = "block";
+      valid = false;
+    } else {
+      document.getElementById("mobile").classList.remove("error");
+      document.getElementById("mobile-error").style.display = "none";
+    }
+
+    return valid;
+  }
+
+  async function submitBill() {
+    if (!validate()) return;
+
+    const name = document.getElementById("name").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+
+    // Refresh receipt for each new submission
+    refreshReceipt();
+
+    const btn = document.getElementById("submit-btn");
+    const spinner = document.getElementById("spinner");
+    const btnText = document.getElementById("btn-text");
+    const resultBox = document.getElementById("result-box");
+
+    btn.disabled = true;
+    spinner.style.display = "block";
+    btnText.textContent = "Creating...";
+    resultBox.style.display = "none";
+
+    const payload = {
+      store_code: "PROD_TEST",
+      business_type: "retail",
+      business_category: "retail_and_consumer_goods",
+      receipt_number: currentReceipt,
+      customer: {
+        contact: mobile,
+        name: name,
+        email: "pankaj.chaudhhhhry@razorpay.com",
+        customer_id: "",
+        age: 12,
+        profession: "",
+        company_name: "",
+        marital_status: "married",
+        spouse_name: "",
+        anniversary_date: "",
+        gender: "male",
+        gstin: "",
+        billing_address: {
+          address_line_1: "dfgsgsdg",
+          address_line_2: "",
+          landmark: "",
+          city: "",
+          province: "",
+          pin_code: "",
+          country: ""
+        },
+        shipping_address: {
+          address_line_1: "gdsg",
+          address_line_2: "",
+          landmark: "",
+          city: "",
+          province: "",
+          pin_code: "",
+          country: ""
+        }
+      },
+      loyalty: {
+        type: "cashback",
+        card_num: "",
+        card_holder_name: "",
+        wallet_amount: 0,
+        amount_saved: 0,
+        points_earned: 5,
+        points_redeemed: 0,
+        points_available: 0,
+        points_balance: 0
+      },
+      receipt_timestamp: Math.floor(Date.now() / 1000),
+      receipt_type: "tax_invoice",
+      receipt_delivery: "digital_and_print",
+      bar_code_number: "",
+      qr_code_number: "",
+      billing_pos_number: "bn",
+      pos_category: "traditional_pos",
+      order_number: "",
+      order_service_type: "dine_in",
+      cashier_name: "wt4rseg",
+      cashier_code: "fsd",
+      line_items: [
+        {
+          name: "dsv",
+          quantity: 1,
+          unit_amount: 20,
+          unit: "kg",
+          description: "",
+          hsn_code: "",
+          product_code: "",
+          product_uid: "",
+          discount: 0,
+          discount_description: "",
+          total_amount: 20,
+          brand: "",
+          style: "",
+          colour: "",
+          size: "",
+          financier_data: { reference: "", name: "" },
+          taxes: [{ name: "cgst", percentage: 0, amount: 0 }]
+        }
+      ],
+      receipt_summary: {
+        total_quantity: 1,
+        sub_total_amount: 20,
+        currency: "INR",
+        net_payable_amount: 20,
+        payment_status: "success",
+        delivery_charges: 0,
+        cod_charges: 0,
+        change_amount: 0,
+        roundup_amount: 0,
+        total_discount_percent: 0,
+        total_discount_amount: 0,
+        discounts: [{ name: "adsf", amount: 0 }],
+        used_wallet_amount: 0
+      },
+      taxes: [{ name: "cgst", percentage: 0, amount: 0 }],
+      payments: [
+        {
+          method: "paytm",
+          currency: "INR",
+          amount: 20,
+          payment_reference_id: "",
+          financier_data: { reference: "", name: "v" }
+        }
+      ],
+      event: {
+        name: "dtjhn",
+        start_timestamp: 946684802,
+        end_timestamp: 946684805,
+        location: "",
+        room: ""
+      }
+    };
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": AUTH,
+          "kong-debug": "1"
+        },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await response.json();
+
+      resultBox.style.display = "block";
+      const billLink = document.getElementById("bill-link");
+
+      if (response.ok) {
+        resultBox.className = "result success";
+        document.getElementById("result-title").innerHTML = "✅ Bill Created Successfully!";
+        document.getElementById("result-body").textContent =
+          "Receipt: " + currentReceipt + "\nID: " + (data.id || "—");
+
+        if (data.short_url || data.bill_url || data.url) {
+          const url = data.short_url || data.bill_url || data.url;
+          billLink.href = url;
+          billLink.style.display = "inline-block";
+        } else {
+          billLink.style.display = "none";
+        }
+
+        // Reset receipt for next use
+        refreshReceipt();
+      } else {
+        resultBox.className = "result error";
+        document.getElementById("result-title").innerHTML = "❌ Error";
+        document.getElementById("result-body").textContent =
+          JSON.stringify(data, null, 2);
+        billLink.style.display = "none";
+      }
+
+    } catch (err) {
+      resultBox.style.display = "block";
+      resultBox.className = "result error";
+      document.getElementById("result-title").innerHTML = "❌ Network Error";
+      document.getElementById("result-body").textContent =
+        err.message + "\n\nNote: If this is a CORS error, the API may need to be called from a backend or Postman instead.";
+      document.getElementById("bill-link").style.display = "none";
+    } finally {
+      btn.disabled = false;
+      spinner.style.display = "none";
+      btnText.textContent = "Create Bill";
+    }
+  }
+
+  // Allow Enter key to submit
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") submitBill();
+  });
+</script>
+
+</body>
+</html>
