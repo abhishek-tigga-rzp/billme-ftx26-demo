@@ -1,0 +1,9 @@
+{
+  "name": "billme-ftx26-demo",
+  "version": "1.0.0",
+  "description": "Billme Demo Creator for FTX26",
+  "main": "billme-server.js",
+  "scripts": {
+    "start": "node billme-server.js"
+  }
+}

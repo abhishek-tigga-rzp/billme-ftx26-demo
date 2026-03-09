@@ -11,7 +11,7 @@ const https = require("https");
 const fs = require("fs");
 const path = require("path");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const RAZORPAY_HOST = "api.razorpay.com";
 const RAZORPAY_PATH = "/v1/bills";
 const AUTH = "Basic cnpwX2xpdmVfT1l0SEJ5Y0ZSdjV5cDM6U3J5Q0dtRXE4OHBaMXZwUG5xNFVDN215";
