@@ -247,7 +247,7 @@ const HTML = `<!DOCTYPE html>
         billing_address: { address_line_1: "Razorpay FTX Venue", address_line_2: "", landmark: "", city: "", province: "", pin_code: "", country: "" },
         shipping_address: { address_line_1: "Razorpay FTX Venue", address_line_2: "", landmark: "", city: "", province: "", pin_code: "", country: "" }
       },
-      loyalty: { type: "cashback", card_num: "", card_holder_name: "", wallet_amount: 0, amount_saved: 0, points_earned: 5, points_redeemed: 0, points_available: 0, points_balance: 0 },
+      loyalty: { type: "cashback", card_num: "", card_holder_name: "", wallet_amount: 0, amount_saved: 0, points_earned: 26, points_redeemed: 0, points_available: 0, points_balance: 0 },
       receipt_timestamp: Math.floor(Date.now() / 1000),
       receipt_type: "tax_invoice",
       receipt_delivery: "digital_and_print",
@@ -257,13 +257,16 @@ const HTML = `<!DOCTYPE html>
       pos_category: "traditional_pos",
       order_number: "",
       order_service_type: "",
-      cashier_name: "wt4rseg",
-      cashier_code: "fsd",
-      line_items: [{ name: "Billme Demo Bill", quantity: 1, unit_amount: 20, unit: "kg", description: "", hsn_code: "", product_code: "", product_uid: "", discount: 0, discount_description: "", total_amount: 20, brand: "", style: "", colour: "", size: "", financier_data: { reference: "", name: "" }, taxes: [{ name: "cgst", percentage: 0, amount: 0 }] }],
-      receipt_summary: { total_quantity: 1, sub_total_amount: 20, currency: "INR", net_payable_amount: 20, payment_status: "success", delivery_charges: 0, cod_charges: 0, change_amount: 0, roundup_amount: 0, total_discount_percent: 0, total_discount_amount: 0, discounts: [{ name: "adsf", amount: 0 }], used_wallet_amount: 0 },
-      taxes: [{ name: "cgst", percentage: 0, amount: 0 }],
-      payments: [{ method: "UPI", currency: "INR", amount: 20, payment_reference_id: "", financier_data: { reference: "", name: "v" } }],
-      event: { name: "dtjhn", start_timestamp: 946684802, end_timestamp: 946684805, location: "", room: "" }
+      cashier_name: "Rahul Sharma",
+      cashier_code: "RS01",
+      line_items: [
+        { name: "Smash Burger", quantity: 1, unit_amount: 39900, description: "", hsn_code: "", product_code: "", product_uid: "", discount: 0, discount_description: "", total_amount: 39900, brand: "", style: "", colour: "", size: "", financier_data: { reference: "", name: "" }, taxes: [{ name: "cgst", percentage: 2.5, amount: 1000 }, { name: "sgst", percentage: 2.5, amount: 1000 }] },
+        { name: "Cold Beverage", quantity: 1, unit_amount: 12000, description: "", hsn_code: "", product_code: "", product_uid: "", discount: 0, discount_description: "", total_amount: 12000, brand: "", style: "", colour: "", size: "", financier_data: { reference: "", name: "" }, taxes: [{ name: "cgst", percentage: 2.5, amount: 300 }, { name: "sgst", percentage: 2.5, amount: 300 }] }
+      ],
+      receipt_summary: { total_quantity: 2, sub_total_amount: 51900, currency: "INR", net_payable_amount: 54500, payment_status: "success", delivery_charges: 0, cod_charges: 0, change_amount: 0, roundup_amount: 0, total_discount_percent: 0, total_discount_amount: 0, discounts: [], used_wallet_amount: 0 },
+      taxes: [{ name: "cgst", percentage: 2.5, amount: 1300 }, { name: "sgst", percentage: 2.5, amount: 1300 }],
+      payments: [{ method: "UPI", currency: "INR", amount: 54500, payment_reference_id: "" }],
+      event: { name: "Razorpay FTX 2026", start_timestamp: 946684802, end_timestamp: 946684805, location: "Razorpay FTX Venue", room: "" }
     };
 
     try {
